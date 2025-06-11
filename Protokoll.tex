@@ -1,0 +1,340 @@
+\documentclass[a4paper]{article}
+\setlength{\headheight}{23pt}
+\usepackage[a4paper, left=2.5cm, right=2.5cm]{geometry}
+\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{grffile}
+\usepackage{eurosym}
+\usepackage{graphicx} % Allows including images 
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{siunitx}
+\usepackage{ifthen}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage[justification=raggedright,labelfont=bf,font=scriptsize]{caption}
+\usepackage{todonotes}
+\presetkeys{todonotes}{inline}{}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{lastpage}
+\usepackage{xspace}	
+\usepackage[skip=10pt plus1pt, indent=10pt]{parskip}
+\usepackage{makecell}
+\usepackage{csvsimple}
+\usepackage{siunitx}
+\usepackage{svg}
+\usepackage{sectsty}
+\allsectionsfont{\sffamily}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% VARIABLEN FÜR VORLAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\titlelecture{VorlesungWellen}
+\newcommand\titlelab{Versuchsname}
+\newcommand\namelabengineer{Laboringenieur}
+\newcommand\datelab{Versuchsdatum}
+\newcommand\datereport{\today}
+\newcommand\studyregister{Matrikel}
+\newcommand\labgroup{Praktikumsgruppe}
+\newcommand\nameprotocol{AUtor}
+\newcommand\labgroupnames{Praktikant 1\\
+Praktikant 2\\
+Praktikant 3
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%  Mathematik
+\usepackage{amsmath}								%  Mathematikpaket
+\allowdisplaybreaks									%  Formeln können auf mehrere Seiten verteilt werden
+\usepackage{amssymb}								%  spezielle Mathmematiksymbole
+\usepackage{siunitx}								%  korrektes Darstellen von Einheiten
+\sisetup{locale = DE}
+
+\usepackage{geometry}								%  Definition der Seitenraender
+\usepackage[final]{pdfpages}							% zum einbinden von externen pdf-Seiten
+\usepackage{graphicx}								%  zum Einbinden von Grafiken, spziell für dvi->ps Konvertierung
+\setlength{\unitlength}{1mm}
+\usepackage[hidelinks]{hyperref}	
+\usepackage{placeins}								% FloatBarrier
+\usepackage{upgreek}
+\usepackage{tabularx}								% schöne tabellen
+\usepackage{longtable}  								% lange tabellen
+%\usepackage[osf,sc]{mathpazo}						% Schriftart	
+\usepackage{booktabs}								% linien in der tabelle
+\usepackage{nicefrac}								% brüche in zeilen
+
+\usepackage{array}
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+
+\usepackage[					   % Literaturverzeichnis mit "biber [Projektname ohne Endung]" aktualisieren
+    backend=biber,
+    style=ieee,
+]{biblatex}                        % Bibliography management
+\addbibresource{references.bib}    % Bibliography file
+
+% ---------------Mathematisches----------------------------->
+%  fett dargestellte Zeichen im Mathematikmodus, Matrizen, Vektoren
+\newcommand{\mv}[1]{\ensuremath{\boldsymbol{#1}}}
+%  fett dargestellte unterstrichene Zeichen im Mathematikmodus
+\newcommand{\kmv}[1]{\ensuremath{\underline{\boldsymbol{#1}}}}
+%  Transponierte einer Matrix
+\newcommand{\trans}[1]{\ensuremath{\boldsymbol{#1}^{\mathrm{T}}}}
+%  Transponierte der konjugiert komplexen Matrix
+\newcommand{\herm}[1]{\ensuremath{\boldsymbol{#1}^{\mathrm{H}}}}
+%  Rang Matrix
+\newcommand{\rg}[1]{\ensuremath{\mathrm{rg}\left({#1}\right)}}
+%  Spur einer Matrix
+\newcommand{\tr}[1]{\ensuremath{\mathrm{tr}\left\{ #1 \right\}}}
+%  Realteil
+\newcommand{\re}[1]{\mathrm{Re}\left\{  #1 \right\} }
+%  Imaginärteil
+\newcommand{\im}[1]{\mathrm{Im}\left\{  #1 \right\} }
+%  Unterstreichung ... komplex
+\newcommand{\K}[1]{\underline{#1}}
+%  erzeugt das "entspricht Zeichen"
+\newcommand{\corsp}{\ensuremath{\stackrel{\scriptscriptstyle \bigtriangleup}{=}}}
+%  gewöhnliche Ableitung
+\newcommand{\ddx}[1][x]{\frac{\mathrm{d}}{\mathrm{d} #1}}
+%  partielle Ableitung
+\newcommand{\pddx}[1][x]{\frac{\partial}{\partial #1}}
+%  zweifache partielle Ableitung
+\newcommand{\ppddx}[1][x]{\frac{\partial^2}{\partial #1 ^2}}
+%  d-Operator
+\newcommand{\dd}{\mathrm{d}}
+%  Einheitsmatrix							
+\newcommand{\ident}{\mv{I}}	
+%  const. im Mathematikmodus							
+\newcommand{\const}{\mathrm{const.}}			
+%  imaginäre Einheit
+\newcommand{\ii}{j}		
+%  imaginäre Einheit * omega										
+\newcommand{\jw}{\ii \, \omega}						
+% <--------------- End of Mathematisches ----------------------
+
+% --------------- Abkürzungen ------------------------------>
+\newcommand{\zb}{\mbox{z.\,B.}\xspace}		%  Erzeugt z.B. mit korrektem Zwischenraum
+\newcommand{\ua}{\mbox{u.\,a.}\xspace}		%  Erzeugt u.a. mit korrektem Zwischenraum
+\newcommand{\ie}{\mbox{d.\,h.}\xspace}		%  Erzeugt d.h. mit korrektem Zwischenraum
+\newcommand{\og}{\mbox{o.\,g.}\xspace}		%  Erzeugt o.g. mit korrektem Zwischenraum
+\newcommand{\oa}{\mbox{o.\,a.}\xspace}		%  Erzeugt o.a. mit korrektem Zwischenraum
+% <--------------- End of Abkürzungen ----------------------
+
+\lhead{Versuch: \titlelab} 
+\chead{} 
+\rhead{} 
+
+\lfoot{\labgroup} \cfoot{} \rfoot{Seite \thepage\ von \pageref{LastPage}} 
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\addto\captionsngerman{\renewcommand{\figurename}{Abb.}}
+\addto\captionsngerman{\renewcommand{\tablename}{Tab.}}
+%\captionsetup{justification = raggedright}
+
+\begin{document}
+\begin{titlepage}
+	\newgeometry{left=2.5cm, right=2.5cm,top=1cm,bottom=0.1cm}
+
+	\begin{tikzpicture}[remember picture, overlay]
+		\draw[line width = 1pt] ($(current page.north west) + (20mm,-15mm)$) rectangle ($(current page.south east) + (-20mm,15mm)$);
+		\draw[line width = 1pt] ($(current page.north west)+ (20mm,-36mm)$) -- ($(current page.north west)+ (190mm,-36mm)$);
+	\end{tikzpicture}
+
+	\begin{center}
+
+		% Upper part of the page
+		\begin{minipage}[t][2cm]{\textwidth}
+			\begin{minipage}[b][1.5cm]{0.33\textwidth}
+				\includegraphics[height=1.5cm]{assets/images/HZG_Logo_20_RGB}
+			\end{minipage}
+			\begin{minipage}[b][1.5cm][c]{0.55\textwidth}
+				\vspace*{\fill}
+				\centering
+				\textbf{\Large Fakultät Elektrotechnik / Informatik}\\
+				Fachbereich Elektrotechnik
+				\vspace*{\fill}
+			\end{minipage}
+			\begin{minipage}[b][1.5cm]{0.1\textwidth}
+				\includegraphics[height=1.4cm]{assets/images/fakultaetslogo_ohne_text.png}
+			\end{minipage}
+		\end{minipage}
+		%\newline
+
+		\begin{minipage}[t][3cm]{\textwidth}
+		\end{minipage}
+		%\newline
+
+		\begin{minipage}[t][4cm]{\textwidth}
+			\textbf{Titel des Praktikums:}
+			\vspace*{\fill}
+			\begin{center}
+				\Large \titlelab
+			\end{center}
+			\vspace*{\fill}
+		\end{minipage}
+		%\newline
+
+		\begin{minipage}[t][3.5cm]{\textwidth}
+		\end{minipage}
+		%\newline
+
+		\begin{minipage}[t][3cm]{\textwidth}
+			\textbf{Zugeordnete Lehrveranstaltung:}
+			\vspace*{\fill}
+			\begin{center}
+				\Large \titlelecture
+			\end{center}
+			\vspace*{\fill}
+		\end{minipage}
+		%\newline
+
+		\begin{minipage}[t][3cm]{\textwidth}
+		\end{minipage}
+		%\newline
+
+		\begin{minipage}[t][0.5cm]{\textwidth}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\textbf{Laboringenieur:}
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.4\textwidth}
+				\namelabengineer
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.1\textwidth}
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.2\textwidth}
+
+			\end{minipage}
+		\end{minipage}
+		%\newline
+
+		\begin{minipage}[t][0.5cm]{\textwidth}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\textbf{Praktikum am:}
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\datelab
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.2\textwidth}
+				\textbf{Protokolldatum:}
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\datereport
+			\end{minipage}
+		\end{minipage}
+		%\newline
+
+		\begin{minipage}[t][0.5cm]{\textwidth}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\textbf{Matrikel:}
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\studyregister
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.2\textwidth}
+				\textbf{Praktikagruppe:}
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\labgroup
+			\end{minipage}
+		\end{minipage}
+		%\newline
+
+		\begin{minipage}[t][2.5cm]{\textwidth}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\textbf{Protokoll erstellt von:}
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\nameprotocol
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.2\textwidth}
+				\textbf{Teilnehmer:}
+			\end{minipage}
+			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+				\labgroupnames
+			\end{minipage}
+		\end{minipage}
+
+	\end{center}
+
+\end{titlepage}
+\newgeometry{left=2.5cm, right=2.5cm,top=2.5cm,bottom=2.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%% START DOCUMENT  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\vspace{5cm}
+\newpage
+
+\section{Versuchsziel}
+
+Ziel des Versuchs.
+
+\section{Grundlagen, Vorbereitung}
+\subsection{Unterabschnitt}
+
+Gleichungsblock
+\begin{align}
+	C_n & = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}{f(t)e^{-jn\omega_0t}}dt                                                                                                                                                           \\
+	    & = \dfrac{A}{T_0} \cdot \left[\dfrac{e^{-jn\omega_0t}}{-jn\omega_0t}\right]_{-\dfrac{\tau}{2}}^{\dfrac{\tau}{2}}                                                                                                                  \\
+	    & = -\dfrac{A}{jn\omega_0 T}\cdot \left[e^{-jn\omega_0 \dfrac{\tau}{2}}-e^{jn\omega_0 \dfrac{\tau}{2}}\right]
+	\intertext{Mit $e^{j\phi}=\cos (\varphi)+j \sin(\varphi)$ kann dieser Term vereinfacht werden:}
+	C_n & = -\dfrac{A}{jn\omega_0 T}\cdot \left[\cos\left(-n\omega_0 \dfrac{\tau}{2}\right) + j\sin\left(-n\omega_0 \dfrac{\tau}{2}\right)-\cos\left(-n\omega_0 \dfrac{\tau}{2}\right)-j\sin\left(-n\omega_0 \dfrac{\tau}{2}\right)\right]
+	\intertext{Mit $\cos(x) =\cos(-x)$ und $\sin(-x)=-\sin(x)$ kann weiter vereinfacht werden:}
+	C_n & =-\dfrac{A}{jn\omega_0 T}\cdot \left[j\sin\left(-n\omega_0 \dfrac{\tau}{2}\right) + j\sin\left(-n\omega_0 \dfrac{\tau}{2}\right)\right]                                                                                          \\
+	    & = -\dfrac{A}{jn\omega_0 T}\cdot \left[-2j\sin\left(n\omega_0 \dfrac{\tau}{2}\right) \right]
+	\intertext{Die Kreisfrequenz $\omega_0$ kann ersetzt werden durch $\omega_0=2\pi f_0 = \frac{2 \pi}{T_0}$:}
+	C_n & = \dfrac{A \cdot T}{2n\pi T}\cdot 2 \sin\left(\dfrac{2n\pi \tau}{2T}\right)                                                                                                                                                      \\
+	    & = \dfrac{A}{n\pi}\cdot \sin\left(n\pi\frac{\tau}{T}\right)
+	\intertext{Nach Erweiterung mit $\dfrac{\frac{\tau}{T}}{\frac{\tau}{T}}$}
+	C_n & = \dfrac{A\cdot \tau}{T} \cdot \dfrac{\sin\left(\frac{n\pi \tau}{T}\right)}{\frac{n\pi \tau}{T}}
+	\intertext{kann mit der si-Funktion vereinfacht werden:}
+	C_n & = \dfrac{A\cdot \tau}{T} \cdot \text{si}\left({\frac{n\pi \tau}{T}}\right) \label{eq:koeff_si}
+\end{align}
+
+\section{Versuchsaufbau, Versuchsdurchführung}
+\subsection{Schaltplan und Geräteliste}
+Der allgemeine Versuchsaufbau ist nachfolgend in Abbildung \ref{fig:1} dargestellt:
+
+\begin{minipage}[t]{\textwidth-10pt}
+	\centering
+	\captionsetup{type=figure}
+	\includegraphics[width=0.9\textwidth]{assets/images/Versuchsschema.png}
+	\captionof{figure}{Schematischer Aufbau des Versuchs\cite{oA:2022:bk}}
+	\label{fig:1}
+\end{minipage}
+
+\subsection{Versuchsdurchführung}
+
+\section{Auswertung}
+
+\newpage
+\section{Literaturverzeichnis}
+\printbibliography
+
+\appendix
+\section{Anhang}
+\subsection{Messwerte}	
+\vspace{0.5cm}
+\begin{table}[h]
+	\centering
+	\captionof{table}{Messwerte, berechnete Fourier-Koeffizienten und Beträge der Übertragungsfunktion}
+	\label{tab:mess}
+	\begin{tabularx}{\textwidth}{cYYYYYc}
+		\toprule
+		\bfseries n & \boldmath \makecell{$U_{e} / mV$ \\  gemessen} & \boldmath \makecell{$U_{a} / mV$ \\   gemessen}& \boldmath \makecell{$\displaystyle \frac{U_a}{U_e}$} & \boldmath \makecell{$U_e / mV$ \\   berechnet}
+		& \boldmath \makecell{$U_a / mV$   \\   berechnet} & \boldmath \makecell{$\displaystyle \frac{U_a}{U_e} \Big \vert _{U_e=\hat{U}\sin 2 \pi \cdot n f_0}$} 
+		\\ \midrule
+		
+		\csvreader[
+			head to column names,
+			late after line=\\,
+			late after last line=\\ \bottomrule]
+			{assets/data/Messwerte.csv}{}{\1 & \2 & \3 & \4 & \5 & \6 & \7}
+	\end{tabularx}
+\end{table}
+\end{document}
