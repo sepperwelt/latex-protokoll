@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,fleqn]{article}
 \setlength{\headheight}{23pt}
 \usepackage[a4paper, left=2.5cm, right=2.5cm]{geometry}
 \usepackage[utf8]{inputenc}
@@ -8,14 +8,17 @@
 \usepackage{eurosym}
 \usepackage{graphicx} % Allows including images 
 \usepackage{amsmath, amsthm, amssymb}
-\usepackage{siunitx}
+\usepackage[separate-uncertainty]{siunitx}
 \usepackage{ifthen}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\usepackage[justification=raggedright,labelfont=bf,font=scriptsize]{caption}
+\usepackage[justification=centering,labelfont=bf]{caption}
+\usepackage[bottom]{footmisc}
 \usepackage{todonotes}
 \presetkeys{todonotes}{inline}{}
 \usepackage{tikz}
+\usepackage{gnuplot-lua-tikz}
+\usepackage{circuitikz}
 \usetikzlibrary{calc}
 \usepackage{lastpage}
 \usepackage{xspace}	
@@ -26,13 +29,26 @@
 \usepackage{svg}
 \usepackage{sectsty}
 \allsectionsfont{\sffamily}
+\usepackage{csquotes}
+\usepackage{multicol}
 
+\usepackage{enumitem}
+\setitemize{itemsep=-5pt}
+\setenumerate{itemsep=-5pt}
+\setlength{\mathindent}{10pt}
 
+\newcommand\tab[1][0.5cm]{\hspace*{#1}}
+
+\usepackage[					   % Literaturverzeichnis mit "biber [Projektname ohne Endung]" aktualisieren
+    backend=biber,
+    style=ieee,
+]{biblatex}                        % Bibliography management
+\addbibresource{references.bib}    % Bibliography file
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% VARIABLEN FÜR VORLAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand\titlelecture{VorlesungWellen}
+\newcommand\titlelecture{Vorlesungsname/Modulname}
 \newcommand\titlelab{Versuchsname}
 \newcommand\namelabengineer{Laboringenieur}
 \newcommand\datelab{Versuchsdatum}
@@ -70,11 +86,6 @@ Praktikant 3
 \usepackage{array}
 \newcolumntype{Y}{>{\centering\arraybackslash}X}
 
-\usepackage[					   % Literaturverzeichnis mit "biber [Projektname ohne Endung]" aktualisieren
-    backend=biber,
-    style=ieee,
-]{biblatex}                        % Bibliography management
-\addbibresource{references.bib}    % Bibliography file
 
 % ---------------Mathematisches----------------------------->
 %  fett dargestellte Zeichen im Mathematikmodus, Matrizen, Vektoren
@@ -243,13 +254,15 @@ Praktikant 3
 		%\newline
 
 		\begin{minipage}[t][2.5cm]{\textwidth}
+%			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+%				\textbf{Protokoll erstellt von:}
+%
+%			\end{minipage}
+%			\begin{minipage}[t][0.5cm]{0.25\textwidth}
+%				\nameprotocol
+%
+%			\end{minipage}
 			\begin{minipage}[t][0.5cm]{0.25\textwidth}
-				\textbf{Protokoll erstellt von:}
-			\end{minipage}
-			\begin{minipage}[t][0.5cm]{0.25\textwidth}
-				\nameprotocol
-			\end{minipage}
-			\begin{minipage}[t][0.5cm]{0.2\textwidth}
 				\textbf{Teilnehmer:}
 			\end{minipage}
 			\begin{minipage}[t][0.5cm]{0.25\textwidth}
@@ -267,74 +280,6 @@ Praktikant 3
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \tableofcontents
-\vspace{5cm}
 \newpage
-
-\section{Versuchsziel}
-
-Ziel des Versuchs.
-
-\section{Grundlagen, Vorbereitung}
-\subsection{Unterabschnitt}
-
-Gleichungsblock
-\begin{align}
-	C_n & = \frac{1}{T}\int_{-\frac{T}{2}}^{\frac{T}{2}}{f(t)e^{-jn\omega_0t}}dt                                                                                                                                                           \\
-	    & = \dfrac{A}{T_0} \cdot \left[\dfrac{e^{-jn\omega_0t}}{-jn\omega_0t}\right]_{-\dfrac{\tau}{2}}^{\dfrac{\tau}{2}}                                                                                                                  \\
-	    & = -\dfrac{A}{jn\omega_0 T}\cdot \left[e^{-jn\omega_0 \dfrac{\tau}{2}}-e^{jn\omega_0 \dfrac{\tau}{2}}\right]
-	\intertext{Mit $e^{j\phi}=\cos (\varphi)+j \sin(\varphi)$ kann dieser Term vereinfacht werden:}
-	C_n & = -\dfrac{A}{jn\omega_0 T}\cdot \left[\cos\left(-n\omega_0 \dfrac{\tau}{2}\right) + j\sin\left(-n\omega_0 \dfrac{\tau}{2}\right)-\cos\left(-n\omega_0 \dfrac{\tau}{2}\right)-j\sin\left(-n\omega_0 \dfrac{\tau}{2}\right)\right]
-	\intertext{Mit $\cos(x) =\cos(-x)$ und $\sin(-x)=-\sin(x)$ kann weiter vereinfacht werden:}
-	C_n & =-\dfrac{A}{jn\omega_0 T}\cdot \left[j\sin\left(-n\omega_0 \dfrac{\tau}{2}\right) + j\sin\left(-n\omega_0 \dfrac{\tau}{2}\right)\right]                                                                                          \\
-	    & = -\dfrac{A}{jn\omega_0 T}\cdot \left[-2j\sin\left(n\omega_0 \dfrac{\tau}{2}\right) \right]
-	\intertext{Die Kreisfrequenz $\omega_0$ kann ersetzt werden durch $\omega_0=2\pi f_0 = \frac{2 \pi}{T_0}$:}
-	C_n & = \dfrac{A \cdot T}{2n\pi T}\cdot 2 \sin\left(\dfrac{2n\pi \tau}{2T}\right)                                                                                                                                                      \\
-	    & = \dfrac{A}{n\pi}\cdot \sin\left(n\pi\frac{\tau}{T}\right)
-	\intertext{Nach Erweiterung mit $\dfrac{\frac{\tau}{T}}{\frac{\tau}{T}}$}
-	C_n & = \dfrac{A\cdot \tau}{T} \cdot \dfrac{\sin\left(\frac{n\pi \tau}{T}\right)}{\frac{n\pi \tau}{T}}
-	\intertext{kann mit der si-Funktion vereinfacht werden:}
-	C_n & = \dfrac{A\cdot \tau}{T} \cdot \text{si}\left({\frac{n\pi \tau}{T}}\right) \label{eq:koeff_si}
-\end{align}
-
-\section{Versuchsaufbau, Versuchsdurchführung}
-\subsection{Schaltplan und Geräteliste}
-Der allgemeine Versuchsaufbau ist nachfolgend in Abbildung \ref{fig:1} dargestellt:
-
-\begin{minipage}[t]{\textwidth-10pt}
-	\centering
-	\captionsetup{type=figure}
-	\includegraphics[width=0.9\textwidth]{assets/images/Versuchsschema.png}
-	\captionof{figure}{Schematischer Aufbau des Versuchs\cite{oA:2022:bk}}
-	\label{fig:1}
-\end{minipage}
-
-\subsection{Versuchsdurchführung}
-
-\section{Auswertung}
-
-\newpage
-\section{Literaturverzeichnis}
-\printbibliography
-
-\appendix
-\section{Anhang}
-\subsection{Messwerte}	
-\vspace{0.5cm}
-\begin{table}[h]
-	\centering
-	\captionof{table}{Messwerte, berechnete Fourier-Koeffizienten und Beträge der Übertragungsfunktion}
-	\label{tab:mess}
-	\begin{tabularx}{\textwidth}{cYYYYYc}
-		\toprule
-		\bfseries n & \boldmath \makecell{$U_{e} / mV$ \\  gemessen} & \boldmath \makecell{$U_{a} / mV$ \\   gemessen}& \boldmath \makecell{$\displaystyle \frac{U_a}{U_e}$} & \boldmath \makecell{$U_e / mV$ \\   berechnet}
-		& \boldmath \makecell{$U_a / mV$   \\   berechnet} & \boldmath \makecell{$\displaystyle \frac{U_a}{U_e} \Big \vert _{U_e=\hat{U}\sin 2 \pi \cdot n f_0}$} 
-		\\ \midrule
-		
-		\csvreader[
-			head to column names,
-			late after line=\\,
-			late after last line=\\ \bottomrule]
-			{assets/data/Messwerte.csv}{}{\1 & \2 & \3 & \4 & \5 & \6 & \7}
-	\end{tabularx}
-\end{table}
+\input{content}
 \end{document}
