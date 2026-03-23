@@ -138,6 +138,28 @@
 \NewDocumentCommand{\labgroup}{}{\str_use:N \l_labgroup_tl}
 \NewDocumentCommand{\labgroupnames}{}{\str_use:N \l_labgroupnames_tl}
 
+
+\tl_new:N \l_hszg_tl
+\tl_set:Nn \l_hszg_tl {assets/images/HSZG.svg}
+\cs_new_protected:Npn \FileHszgTest
+    {
+        \bool_if:nTF
+            { \file_if_exist_p:V \l_hszg_tl }
+            { \includesvg[height=1.5cm]{\tl_use:N \l_hszg_tl} }
+            { \todo[color=red]{Logo\ \texttt{HSZG.svg}\ fehlt!}}
+    } 
+
+\tl_new:N \l_fei_tl
+\tl_set:Nn \l_fei_tl {assets/images/f-ei.png}
+\cs_new_protected:Npn \FileFEITest
+    {
+        \bool_if:nTF
+            { \file_if_exist_p:V \l_fei_tl }
+            { \includegraphics[height=1.4cm]{\tl_use:N \l_fei_tl}}
+            { \todo[color=red]{Logo\ \texttt{f-ei.png}\ fehlt!}}
+    } 
+
+
 \ExplSyntaxOff
     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,7 +190,7 @@
             % Upper part of the page
             \begin{minipage}[t][2cm]{\textwidth}
                 \begin{minipage}[b][1.5cm]{0.33\textwidth}
-                    \includesvg[height=1.5cm]{assets/images/HSZG.svg}
+                    \FileHszgTest
                 \end{minipage}
                 \hfill
                 \begin{minipage}[b][1.5cm][c]{0.55\textwidth}
@@ -179,7 +201,7 @@
                     \vspace*{\fill}
                 \end{minipage}
                 \begin{minipage}[b][1.5cm]{0.1\textwidth}
-                    \includegraphics[height=1.4cm]{assets/images/fakultaetslogo_ohne_text.png}
+                    \FileFEITest
                 \end{minipage}
             \end{minipage}
             %\newline
