@@ -9,4 +9,8 @@
 *.out
 *(busy)
 *.bbl
+*.bbl-SAVE-ERROR
 *.lco
+*.lot
+*.lof
+*.tdo
