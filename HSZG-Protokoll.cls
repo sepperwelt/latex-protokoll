@@ -47,7 +47,7 @@
 
 %  Mathematik
 \RequirePackage{amsmath}								%  Mathematikpaket
-\allowdisplaybreaks									%  Formeln können auf mehrere Seiten verteilt werden
+\allowdisplaybreaks									    %  Formeln können auf mehrere Seiten verteilt werden
 \RequirePackage{amssymb}								%  spezielle Mathmematiksymbole
 \RequirePackage{siunitx}								%  korrektes Darstellen von Einheiten
 \sisetup{locale = DE}
@@ -73,31 +73,72 @@
 \newcommand\tab[1][0.5cm]{\hspace*{#1}}
 
 %\AtEndPreamble{
-    \RequirePackage[					   % Literaturverzeichnis mit "biber [Projektname ohne Endung]" aktualisieren
+    \RequirePackage[					                % Literaturverzeichnis mit "biber [Projektname ohne Endung]" aktualisieren
         backend=biber,
         style=ieee,
-    ]{biblatex}                        % Bibliography management
-    \addbibresource{references.bib}    % Bibliography file
+    ]{biblatex}                                         % Bibliography management
+    \addbibresource{references.bib}                     % Bibliography file
 %}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% VARIABLEN FÜR VORLAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\DeclareKeys[mykeys]{
-    titlelecture    .store = \titlelecture      ,
-    titlelab        .store = \titlelab          ,
-    namelabengineer .store = \namelabengineer   ,
-    datelab         .store = \datelab           ,
-    datereport      .store = \datereport        ,
-    %datereport      .default = \today,
-    studyregister   .store = \studyregister     ,
-    labgroup        .store = \labgroup          
-}
-\ProcessKeyOptions[mykeys]
+\RequirePackage{expl3}
+\ExplSyntaxOn
 
-\newcommand\labgroupnames{}
-\newcommand\setlabgroupnames[1]{\renewcommand\labgroupnames{#1}}
+\tl_new:N \l_titlelecture_tl
+\tl_new:N \l_titlelab_tl
+\tl_new:N \l_namelabengineer_tl
+\tl_new:N \l_datelab_tl
+\tl_new:N \l_datereport_tl
+\tl_new:N \l_studyregister_tl
+\tl_new:N \l_labgroup_tl
+\tl_new:N \l_labgroupnames_tl
+
+% Define a new key-value family
+\keys_define:nn { titlepage }
+    {
+        titlelecture    .tl_set:N = \l_titlelecture_tl,
+        titlelecture    .initial:n = {Titel~der~Lehrveranstaltung},
+
+        titlelab        .tl_set:N = \l_titlelab_tl,
+        titlelab        .initial:n = {Versuchsname},
+
+        namelabengineer .tl_set:N = \l_namelabengineer_tl,
+        namelabengineer .initial:n = {Schreiter},
+
+        datelab         .tl_set:N = \l_datelab_tl,
+        datelab         .initial:n = {Versuchsdatum},
+
+        datereport      .tl_set:N = \l_datereport_tl,
+        datereport      .initial:n = {Protokolldatum},
+
+        studyregister   .tl_set:N = \l_studyregister_tl,
+        studyregister   .initial:n = {Matrikel},
+
+        labgroup        .tl_set:N = \l_labgroup_tl,
+        labgroup        .initial:n = {Gruppennummer},
+
+        labgroupnames   .tl_set:N = \l_labgroupnames_tl,
+        labgroupnames   .initial:n = {Namen\\der\\Beteiligten}
+    }
+
+% Command to use the keys
+\NewDocumentCommand{\SetupTitlePage}{m}{
+    \keys_set:nn {titlepage}{#1}
+}
+
+\NewDocumentCommand{\titlelecture}{}{\tl_use:N \l_titlelecture_tl}
+\NewDocumentCommand{\titlelab}{}{\str_use:N \l_titlelab_tl}
+\NewDocumentCommand{\namelabengineer}{}{\str_use:N \l_namelabengineer_tl}
+\NewDocumentCommand{\datelab}{}{\str_use:N \l_datelab_tl}
+\NewDocumentCommand{\datereport}{}{\str_use:N \l_datereport_tl}
+\NewDocumentCommand{\studyregister}{}{\str_use:N \l_studyregister_tl}
+\NewDocumentCommand{\labgroup}{}{\str_use:N \l_labgroup_tl}
+\NewDocumentCommand{\labgroupnames}{}{\str_use:N \l_labgroupnames_tl}
+
+\ExplSyntaxOff
     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -113,7 +154,7 @@
 \addto\captionsngerman{\renewcommand{\tablename}{Tab.}}
 %\captionsetup{justification = raggedright}
 
-\AtBeginDocument{
+\AddToHook{begindocument/end}{
     \begin{titlepage}
         \newgeometry{left=2.5cm, right=2.5cm,top=1cm,bottom=0.1cm}
 
