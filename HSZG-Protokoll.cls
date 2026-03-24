@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{HSZG-Protokoll}[2026/03/13 Vorlage für Protokolle an der HSZG]
+\ProvidesClass{HSZG-Protokoll}[2026/03/24 Vorlage für Protokolle an der HSZG]
 \LoadClass[a4paper,fleqn,11pt]{article}
 
 \setlength{\headheight}{23pt}
@@ -73,23 +73,26 @@
 \RequirePackage{expl3}
 \ExplSyntaxOn
 
-\tl_new:N \l_references_tl
-\tl_set:Nn \l_references_tl {references.bib}
+\msg_new:nnnn { HSZG-Protokoll } { missing_bib } {'#1'~ nicht~ gefunden.~ Es~ wird~ kein~ Literaturverzeichnis~ erstellt.} {"references.bib"~ wurde~ im~ Stammverzeichnis~ nicht~ gefunden.\\Es~ wird~ kein~ Literaturverzeichnis~ erstellt.\\Das~ Package~ "biblatex"~ wird~ nicht~ geladen.}
 
-\msg_new:nnnn { HSZG-Protokoll } { missing_bib } {"#1"~ nicht~ gefunden.~ Es~ wird~ kein~ Literaturverzeichnis~ erstellt.} {"references.bib"~ wurde~ im~ Stammverzeichnis~ nicht~ gefunden.\\Es~ wird~ kein~ Literaturverzeichnis~ erstellt.\\Das~ Package~ biber~ wird~ nicht~ geladen.}
+\cs_new_protected:Npn \biblio {
+    \tl_new:N \l_references_tl
+    \tl_set:Nn \l_references_tl {references.bib}
 
-\bool_if:nTF
-    { \file_if_exist_p:V {\l_references_tl} }
-    { 
-        \RequirePackage[					                % Literaturverzeichnis mit "biber [Projektname ohne Endung]" aktualisieren
-            backend=biber,
-            style=ieee,
-        ]{biblatex}                                         % Bibliography management
-        \addbibresource{references.bib}                     % Bibliography file
-    }
-    { 
-        \msg_note:nne {HSZG-Protokoll}{missing_bib}{\l_references_tl}
-    }
+
+    \bool_if:nTF
+        { \file_if_exist_p:V {\l_references_tl} }
+        { 
+            \RequirePackage[					                % Literaturverzeichnis mit "biber [Projektname ohne Endung]" aktualisieren
+                backend=biber,
+                style=\tl_use:N \l_bib_style_tl,
+            ]{biblatex}                                         % Bibliography management
+            \addbibresource{references.bib}                     % Bibliography file
+        }
+        { 
+            \msg_note:nne {HSZG-Protokoll}{missing_bib}{\l_references_tl}
+        }
+}
 
 \AtBeginDocument{\RenewCommandCopy\qty\SI}
 
@@ -110,6 +113,7 @@
 \tl_new:N \l_labgroup_tl
 \tl_new:N \l_labgroupnames_tl
 
+
 \bool_new:N \l_labfem_bool
 
 \bool_new:N \g_titlepage_titlelecture_bool
@@ -129,6 +133,9 @@
 \bool_gset_false:N \g_titlepage_studyregister_bool
 \bool_gset_false:N \g_titlepage_labgroup_bool
 \bool_gset_false:N \g_titlepage_labgroupnames_bool
+
+\tl_new:N \l_bib_style_tl
+\tl_set:Nn \l_bib_style_tl {alphabetic}
 
 \keys_define:nn { titlepage }{
     %titlelecture    .tl_set:N = \l_titlelecture_tl,
@@ -200,7 +207,11 @@
     labfem          .value_forbidden:n = true,
 
     sffont          .code:n = {\renewcommand\familydefault\sfdefault},
-    sffont          .value_forbidden:n = true
+    sffont          .value_forbidden:n = true,
+
+    bibstyle        .choice:,
+    bibstyle / num  .code:n = \tl_set:Nn \l_bib_style_tl {ieee},
+    bibstyle / alph .code:n = \tl_set:Nn \l_bib_style_tl {alphabetic},
 }
 
 % === Fehlende Keys überprüfen ==========================================
@@ -268,6 +279,7 @@
 \NewDocumentCommand{\SetupTitlePage}{m}{
     \keys_set:nn {titlepage}{#1}
     \check_keys
+    \biblio
 }
 
 \NewDocumentCommand{\titlelecture}{}{\tl_use:N \l_titlelecture_tl}
@@ -277,7 +289,7 @@
 \NewDocumentCommand{\datelab}{}{\tl_use:N \l_datelab_tl}
 \NewDocumentCommand{\datereport}{}{\tl_use:N \l_datereport_tl}
 \NewDocumentCommand{\studyregister}{}{\tl_use:N \l_studyregister_tl}
-\NewDocumentCommand{\labgroup}{}{\tl_use:N \l_labgroup_tl}
+\NewDocumentCommand{\labgroup}{}{Gruppe\ \tl_use:N \l_labgroup_tl}
 \NewDocumentCommand{\labgroupnames}{}{\tl_use:N \l_labgroupnames_tl}
 
 
@@ -469,7 +481,7 @@
     %
     %			\end{minipage}
                 \begin{minipage}[t][0.5cm]{0.25\textwidth}
-                    \textbf{Teilnehmer:}
+                    \textbf{Teilnehmende:}
                 \end{minipage}
                 \begin{minipage}[t][0.5cm]{0.25\textwidth}
                     \labgroupnames
