@@ -73,13 +73,26 @@
 
 \newcommand\tab[1][0.5cm]{\hspace*{#1}}
 
-%\AtEndPreamble{
-    \RequirePackage[					                % Literaturverzeichnis mit "biber [Projektname ohne Endung]" aktualisieren
-        backend=biber,
-        style=ieee,
-    ]{biblatex}                                         % Bibliography management
-    \addbibresource{references.bib}                     % Bibliography file
-%}
+\RequirePackage{expl3}
+\ExplSyntaxOn
+
+\tl_new:N \l_references_tl
+\tl_set:Nn \l_references_tl {references.bib}
+
+\msg_new:nnnn { HSZG-Protokoll } { missing_bib } {"#1"~ nicht~ gefunden.~ Es~ wird~ kein~ Literaturverzeichnis~ erstellt.} {"references.bib"~ wurde~ im~ Stammverzeichnis~ nicht~ gefunden.\\Es~ wird~ kein~ Literaturverzeichnis~ erstellt.\\Das~ Package~ biber~ wird~ nicht~ geladen.}
+
+\bool_if:nTF
+    { \file_if_exist_p:V {\l_references_tl} }
+    { 
+        \RequirePackage[					                % Literaturverzeichnis mit "biber [Projektname ohne Endung]" aktualisieren
+            backend=biber,
+            style=ieee,
+        ]{biblatex}                                         % Bibliography management
+        \addbibresource{references.bib}                     % Bibliography file
+    }
+    { 
+        \msg_note:nne {HSZG-Protokoll}{missing_bib}{\l_references_tl}
+    }
 
 \AtBeginDocument{\RenewCommandCopy\qty\SI}
 
@@ -87,8 +100,6 @@
 %%%%%%% VARIABLEN FÜR VORLAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\RequirePackage{expl3}
-\ExplSyntaxOn
 % === Warnung von siunix abschalten ===========================================
 \msg_redirect_name:nnn { siunitx } { physics-pkg } { none }
 
@@ -101,6 +112,8 @@
 \tl_new:N \l_studyregister_tl
 \tl_new:N \l_labgroup_tl
 \tl_new:N \l_labgroupnames_tl
+
+\bool_new:N \l_labfem_bool
 
 \bool_new:N \g_titlepage_titlelecture_bool
 \bool_new:N \g_titlepage_titlelab_bool
@@ -179,12 +192,18 @@
     },
 
     %labgroupnames   .tl_set:N = \l_labgroupnames_tl,
-    labgroupnames    .initial:n = {},
+    labgroupnames   .initial:n = {},
     labgroupnames   .value_required:n = true,
     labgroupnames   .code:n = {
         \bool_gset_true:N \g_titlepage_labgroupnames_bool
         \tl_set:Nn \l_labgroupnames_tl {#1}    
     },
+
+    labfem          .bool_set:N = \l_labfem_bool,
+    labfem          .value_forbidden:n = true,
+
+    sffont          .code:n = {\renewcommand\familydefault\sfdefault},
+    sffont          .value_forbidden:n = true
 }
 
 % === Fehlende Keys überprüfen ==========================================
@@ -241,6 +260,10 @@
         \tl_set:Nn \l_labgroupnames_tl {\textcolor{red}{Namen\\der\\Beteiligten}}
         \RenewDocumentCommand{\labgroupnames}{}{\tl_use:N \l_labgroupnames_tl}
     }
+
+    \bool_if:NT \l_labfem_bool {
+        \RenewDocumentCommand{\labengineer}{}{Laboringenieurin}
+    }
 }
 
 % === Setup-Befehl =============================================================
@@ -253,6 +276,7 @@
 \NewDocumentCommand{\titlelecture}{}{\tl_use:N \l_titlelecture_tl}
 \NewDocumentCommand{\titlelab}{}{\tl_use:N \l_titlelab_tl}
 \NewDocumentCommand{\namelabengineer}{}{\tl_use:N \l_namelabengineer_tl}
+\NewDocumentCommand{\labengineer}{}{Laboringenieur}
 \NewDocumentCommand{\datelab}{}{\tl_use:N \l_datelab_tl}
 \NewDocumentCommand{\datereport}{}{\tl_use:N \l_datereport_tl}
 \NewDocumentCommand{\studyregister}{}{\tl_use:N \l_studyregister_tl}
@@ -262,13 +286,7 @@
 
 % === Fehlende Logo-Dateien ====================================================
 
-\tl_new:N \l_missing_hszg_tl
-\tl_set:Nn \l_missing_hszg_tl {Logo\ HSZG.svg\ fehlt!}
-\tl_new:N \l_missing_fei_tl
-\tl_set:Nn \l_missing_fei_tl {Logo\ f-ei.png\ fehlt!}
-
-\msg_new:nnn { HSZG-Protokoll } { missing_hszg } \l_missing_hszg_tl
-\msg_new:nnn { HSZG-Protokoll } { missing_fei } \l_missing_fei_tl
+\msg_new:nnn { HSZG-Protokoll } { missing_logo } {Logo\ "#1"\ fehlt!}
 
 \tl_new:N \l_hszg_tl
 \tl_set:Nn \l_hszg_tl {assets/images/HSZG.svg}
@@ -278,7 +296,7 @@
         { \includesvg[height=1.5cm]{\tl_use:N \l_hszg_tl} }
         { 
             \todo[color=red]{Logo\ \texttt{HSZG.svg}\ fehlt!}
-            \msg_error:nn{HSZG-Protokoll}{missing_hszg}
+            \msg_error:nne{HSZG-Protokoll}{missing_logo}{\l_hszg_tl}
         }
 } 
 
@@ -290,7 +308,7 @@
         { \includegraphics[height=1.4cm]{\tl_use:N \l_fei_tl}}
         { 
             \todo[color=red]{Logo\ \texttt{f-ei.png}\ fehlt!}
-            \msg_error:nn{HSZG-Protokoll}{missing_fei}
+            \msg_error:nne{HSZG-Protokoll}{missing_logo}{\l_fei_tl}
         }
 } 
 
@@ -375,7 +393,7 @@
 
             \begin{minipage}[t][0.5cm]{\textwidth}
                 \begin{minipage}[t][0.5cm]{0.25\textwidth}
-                    \textbf{Laboringenieur:}
+                    \textbf{\labengineer :}
                 \end{minipage}
                 \begin{minipage}[t][0.5cm]{0.4\textwidth}
                     \namelabengineer
