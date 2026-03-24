@@ -68,9 +68,6 @@
 \RequirePackage{array}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 
-
-\RequirePackage{abk}
-
 \newcommand\tab[1][0.5cm]{\hspace*{#1}}
 
 \RequirePackage{expl3}
@@ -314,6 +311,30 @@
 
 
 \ExplSyntaxOff
+
+% === gebräuchliche Abkürzungen etc. ===========================================
+
+% ---------------Mathematisches----------------------------->
+\newcommand{\mv}[1]{\ensuremath{\boldsymbol{#1}}}               %  fett dargestellte Zeichen im Mathematikmodus, Matrizen, Vektoren
+\newcommand{\kmv}[1]{\ensuremath{\underline{\boldsymbol{#1}}}}  %  fett dargestellte unterstrichene Zeichen im Mathematikmodus
+\newcommand{\trans}[1]{\ensuremath{\boldsymbol{#1}^{\mathrm{T}}}} %  Transponierte einer Matrix
+\newcommand{\herm}[1]{\ensuremath{\boldsymbol{#1}^{\mathrm{H}}}} %  Transponierte der konjugiert komplexen Matrix
+\newcommand{\rg}[1]{\ensuremath{\mathrm{rg}\left({#1}\right)}}  %  Rang Matrix
+\newcommand{\re}[1]{\mathrm{Re}\left\{  #1 \right\} }           %  Realteil
+\newcommand{\im}[1]{\mathrm{Im}\left\{  #1 \right\} }           %  Imaginärteil
+\newcommand{\K}[1]{\underline{#1}}                              %  Unterstreichung ... komplex
+\newcommand{\corsp}{\ensuremath{\stackrel{\scriptscriptstyle \bigtriangleup}{=}}} %  erzeugt das "entspricht Zeichen"
+\newcommand{\ident}{\mv{I}}	                                    %  Einheitsmatrix							
+\newcommand{\const}{\mathrm{const.}}			                %  const. im Mathematikmodus							
+\newcommand{\ii}{j}		                                        %  imaginäre Einheit
+\newcommand{\jw}{\ii \, \omega}						            %  imaginäre Einheit * omega										
+
+% --------------- Abkürzungen ------------------------------>
+\newcommand{\zb}{\mbox{z.\,B.}\xspace}		%  Erzeugt z.B. mit korrektem Zwischenraum
+\newcommand{\ua}{\mbox{u.\,a.}\xspace}		%  Erzeugt u.a. mit korrektem Zwischenraum
+\newcommand{\ie}{\mbox{d.\,h.}\xspace}		%  Erzeugt d.h. mit korrektem Zwischenraum
+\newcommand{\og}{\mbox{o.\,g.}\xspace}		%  Erzeugt o.g. mit korrektem Zwischenraum
+\newcommand{\oa}{\mbox{o.\,a.}\xspace}		%  Erzeugt o.a. mit korrektem Zwischenraum
     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
