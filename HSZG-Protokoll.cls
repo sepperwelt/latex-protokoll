@@ -1,8 +1,9 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{HSZG-Protokoll}
+\ProvidesClass{HSZG-Protokoll}[2026/03/13 Vorlage für Protokolle an der HSZG]
 \LoadClass[a4paper,fleqn,11pt]{article}
 
 \setlength{\headheight}{23pt}
+\RequirePackage{silence}
 \RequirePackage{keyval}
 \RequirePackage[a4paper, left=2.5cm, right=2.5cm]{geometry}
 \RequirePackage[utf8]{inputenc}
@@ -12,15 +13,20 @@
 \RequirePackage{eurosym}
 \RequirePackage{graphicx} 
 \RequirePackage{amsmath, amsthm, amssymb}
+\allowdisplaybreaks
 \RequirePackage[separate-uncertainty]{siunitx}
+\RequirePackage{physics}
 \RequirePackage{ifthen}
 \RequirePackage{fancyhdr}
 \pagestyle{fancy}
+
+\RequirePackage{subcaption}
 
 \RequirePackage[justification=centering,labelfont=bf]{caption}
 \RequirePackage[bottom]{footmisc}
 \RequirePackage{todonotes}
 \presetkeys{todonotes}{inline}{}
+\WarningFilter{todonotes}{}
 
 \RequirePackage{tikz}
 \RequirePackage{gnuplot-lua-tikz}
@@ -32,6 +38,8 @@
 \RequirePackage{makecell}
 \RequirePackage{csvsimple}
 \RequirePackage{siunitx}
+\sisetup{locale = DE}
+
 \RequirePackage{svg}
 \RequirePackage{sectsty}
 \allsectionsfont{\sffamily}
@@ -44,13 +52,6 @@
 \setitemize{itemsep=-5pt}
 \setenumerate{itemsep=-5pt}
 \setlength{\mathindent}{10pt}
-
-%  Mathematik
-\RequirePackage{amsmath}								%  Mathematikpaket
-\allowdisplaybreaks									    %  Formeln können auf mehrere Seiten verteilt werden
-\RequirePackage{amssymb}								%  spezielle Mathmematiksymbole
-\RequirePackage{siunitx}								%  korrektes Darstellen von Einheiten
-\sisetup{locale = DE}
 
 \RequirePackage[final]{pdfpages}							% zum einbinden von externen pdf-Seiten
 \RequirePackage{graphicx}								%  zum Einbinden von Grafiken, spziell für dvi->ps Konvertierung
@@ -80,13 +81,18 @@
     \addbibresource{references.bib}                     % Bibliography file
 %}
 
+\AtBeginDocument{\RenewCommandCopy\qty\SI}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%% VARIABLEN FÜR VORLAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \RequirePackage{expl3}
 \ExplSyntaxOn
+% === Warnung von siunix abschalten ===========================================
+\msg_redirect_name:nnn { siunitx } { physics-pkg } { none }
 
+% === Keys deklarieren ========================================================
 \tl_new:N \l_titlelecture_tl
 \tl_new:N \l_titlelab_tl
 \tl_new:N \l_namelabengineer_tl
@@ -96,68 +102,197 @@
 \tl_new:N \l_labgroup_tl
 \tl_new:N \l_labgroupnames_tl
 
-% Define a new key-value family
-\keys_define:nn { titlepage }
-    {
-        titlelecture    .tl_set:N = \l_titlelecture_tl,
-        titlelecture    .initial:n = {Titel~der~Lehrveranstaltung},
+\bool_new:N \g_titlepage_titlelecture_bool
+\bool_new:N \g_titlepage_titlelab_bool
+\bool_new:N \g_titlepage_namelabengineer_bool
+\bool_new:N \g_titlepage_datelab_bool
+\bool_new:N \g_titlepage_datereport_bool
+\bool_new:N \g_titlepage_studyregister_bool
+\bool_new:N \g_titlepage_labgroup_bool
+\bool_new:N \g_titlepage_labgroupnames_bool
 
-        titlelab        .tl_set:N = \l_titlelab_tl,
-        titlelab        .initial:n = {Versuchsname},
+\bool_gset_false:N \g_titlepage_titlelecture_bool
+\bool_gset_false:N \g_titlepage_titlelab_bool
+\bool_gset_false:N \g_titlepage_namelabengineer_bool
+\bool_gset_false:N \g_titlepage_datelab_bool
+\bool_gset_false:N \g_titlepage_datereport_bool
+\bool_gset_false:N \g_titlepage_studyregister_bool
+\bool_gset_false:N \g_titlepage_labgroup_bool
+\bool_gset_false:N \g_titlepage_labgroupnames_bool
 
-        namelabengineer .tl_set:N = \l_namelabengineer_tl,
-        namelabengineer .initial:n = {Schreiter},
+\keys_define:nn { titlepage }{
+    %titlelecture    .tl_set:N = \l_titlelecture_tl,
+    titlelecture    .initial:n = {},
+    titlelecture    .value_required:n = true,
+    titlelecture    .code:n = {
+        \bool_gset_true:N \g_titlepage_titlelecture_bool
+        \tl_set:Nn \l_titlelecture_tl {#1}
+    },
+    
+    %titlelab        .tl_set:N = \l_titlelab_tl,
+    titlelab        .initial:n = {},
+    titlelab        .value_required:n = true,
+    titlelab        .code:n = {
+        \bool_gset_true:N \g_titlepage_titlelab_bool
+        \tl_set:Nn \l_titlelab_tl {#1}
+    },
 
-        datelab         .tl_set:N = \l_datelab_tl,
-        datelab         .initial:n = {Versuchsdatum},
 
-        datereport      .tl_set:N = \l_datereport_tl,
-        datereport      .initial:n = {Protokolldatum},
+    %namelabengineer .tl_set:N = \l_namelabengineer_tl,
+    namelabengineer .initial:n = {},
+    namelabengineer .value_required:n = true,
+    namelabengineer .code:n = {
+        \bool_gset_true:N \g_titlepage_namelabengineer_bool
+        \tl_set:Nn \l_namelabengineer_tl {#1}    
+    },
 
-        studyregister   .tl_set:N = \l_studyregister_tl,
-        studyregister   .initial:n = {Matrikel},
+    %datelab         .tl_set:N = \l_datelab_tl,
+    datelab         .initial:n = {},
+    datelab         .value_required:n = true,
+    datelab         .code:n = {
+        \bool_gset_true:N \g_titlepage_datelab_bool
+        \tl_set:Nn \l_datelab_tl {#1}    
+    },
 
-        labgroup        .tl_set:N = \l_labgroup_tl,
-        labgroup        .initial:n = {Gruppennummer},
+    %datereport      .tl_set:N = \l_datereport_tl,
+    datereport      .initial:n = {},
+    datereport      .value_required:n = true,
+    datereport      .code:n = {
+        \bool_gset_true:N \g_titlepage_datereport_bool
+        \tl_set:Nn \l_datereport_tl {#1}
+    },
 
-        labgroupnames   .tl_set:N = \l_labgroupnames_tl,
-        labgroupnames   .initial:n = {Namen\\der\\Beteiligten}
+    %studyregister   .tl_set:N = \l_studyregister_tl,
+    studyregister    .initial:n = {},
+    studyregister   .value_required:n = true,
+    studyregister   .code:n = {
+        \bool_gset_true:N \g_titlepage_studyregister_bool
+        \tl_set:Nn \l_studyregister_tl {#1}
+    },
+
+    %labgroup        .tl_set:N = \l_labgroup_tl,
+    labgroup        .initial:n = {},
+    labgroup        .value_required:n = true,
+    labgroup        .code:n = {
+        \bool_gset_true:N \g_titlepage_labgroup_bool
+        \tl_set:Nn \l_labgroup_tl {#1}
+    },
+
+    %labgroupnames   .tl_set:N = \l_labgroupnames_tl,
+    labgroupnames    .initial:n = {},
+    labgroupnames   .value_required:n = true,
+    labgroupnames   .code:n = {
+        \bool_gset_true:N \g_titlepage_labgroupnames_bool
+        \tl_set:Nn \l_labgroupnames_tl {#1}    
+    },
+}
+
+% === Fehlende Keys überprüfen ==========================================
+
+\msg_new:nnnn { HSZG-Protokoll } { key-not-set }
+    { Schlüssel~`#1'~ist~nicht~gesetzt. }
+    { Der~Schlüssel~`#1'~muss~mit~\string\SetupTitlePage~in~der~Präambel~gesetzt~werden.}
+
+\cs_new_protected:Npn \check_keys {
+    \bool_if:NF \g_titlepage_titlelecture_bool{
+        \msg_warning:nnn { HSZG-Protokoll } { key-not-set } { titlelecture }
+        \tl_set:Nn \l_titlelecture_tl {\textcolor{red}{Titel~der~Lehrveranstaltung}}
+        \RenewDocumentCommand{\titlelecture}{}{\tl_use:N \l_titlelecture_tl}
     }
 
-% Command to use the keys
+    \bool_if:NF \g_titlepage_titlelab_bool{
+        \msg_warning:nnn { HSZG-Protokoll } { key-not-set } { titlelab }
+        \tl_set:Nn \l_titlelab_tl {\textcolor{red}{Versuchsname}}
+        \RenewDocumentCommand{\titlelab}{}{\tl_use:N \l_titlelab_tl}
+    }
+
+    \bool_if:NF \g_titlepage_namelabengineer_bool{
+        \msg_warning:nnn { HSZG-Protokoll } { key-not-set } { namelabengineer }
+        \tl_set:Nn \l_namelabengineer_tl {\textcolor{red}{Mustermann}}
+        \RenewDocumentCommand{\namelabengineer}{}{\tl_use:N \l_namelabengineer_tl}
+    }
+
+    \bool_if:NF \g_titlepage_datelab_bool{
+        \msg_warning:nnn { HSZG-Protokoll } { key-not-set } { datelab }
+        \tl_set:Nn \l_datelab_tl {\textcolor{red}{Versuchsdatum}}
+        \RenewDocumentCommand{\datelab}{}{\tl_use:N \l_datelab_tl}
+    }
+
+    \bool_if:NF \g_titlepage_datereport_bool{
+        \msg_warning:nnn { HSZG-Protokoll } { key-not-set } { datereport }
+        \tl_set:Nn \l_datereport_tl {\textcolor{red}{Protokolldatum}}
+        \RenewDocumentCommand{\datereport}{}{\tl_use:N \l_datereport_tl}
+    }
+
+    \bool_if:NF \g_titlepage_studyregister_bool{
+        \msg_warning:nnn { HSZG-Protokoll } { key-not-set } { studyregister }
+        \tl_set:Nn \l_studyregister_tl {\textcolor{red}{Matrikel}}
+        \RenewDocumentCommand{\studyregister}{}{\tl_use:N \l_studyregister_tl}
+    }
+
+    \bool_if:NF \g_titlepage_labgroup_bool{
+        \msg_warning:nnn { HSZG-Protokoll } { key-not-set } { labgroup }
+        \tl_set:Nn \l_labgroup_tl {\textcolor{red}{Gruppennummer}}
+        \RenewDocumentCommand{\labgroup}{}{\tl_use:N \l_labgroup_tl}
+    }
+
+    \bool_if:NF \g_titlepage_labgroupnames_bool{
+        \msg_warning:nnn { HSZG-Protokoll } { key-not-set } { labgroupnames }
+        \tl_set:Nn \l_labgroupnames_tl {\textcolor{red}{Namen\\der\\Beteiligten}}
+        \RenewDocumentCommand{\labgroupnames}{}{\tl_use:N \l_labgroupnames_tl}
+    }
+}
+
+% === Setup-Befehl =============================================================
+
 \NewDocumentCommand{\SetupTitlePage}{m}{
     \keys_set:nn {titlepage}{#1}
+    \check_keys
 }
 
 \NewDocumentCommand{\titlelecture}{}{\tl_use:N \l_titlelecture_tl}
-\NewDocumentCommand{\titlelab}{}{\str_use:N \l_titlelab_tl}
-\NewDocumentCommand{\namelabengineer}{}{\str_use:N \l_namelabengineer_tl}
-\NewDocumentCommand{\datelab}{}{\str_use:N \l_datelab_tl}
-\NewDocumentCommand{\datereport}{}{\str_use:N \l_datereport_tl}
-\NewDocumentCommand{\studyregister}{}{\str_use:N \l_studyregister_tl}
-\NewDocumentCommand{\labgroup}{}{\str_use:N \l_labgroup_tl}
-\NewDocumentCommand{\labgroupnames}{}{\str_use:N \l_labgroupnames_tl}
+\NewDocumentCommand{\titlelab}{}{\tl_use:N \l_titlelab_tl}
+\NewDocumentCommand{\namelabengineer}{}{\tl_use:N \l_namelabengineer_tl}
+\NewDocumentCommand{\datelab}{}{\tl_use:N \l_datelab_tl}
+\NewDocumentCommand{\datereport}{}{\tl_use:N \l_datereport_tl}
+\NewDocumentCommand{\studyregister}{}{\tl_use:N \l_studyregister_tl}
+\NewDocumentCommand{\labgroup}{}{\tl_use:N \l_labgroup_tl}
+\NewDocumentCommand{\labgroupnames}{}{\tl_use:N \l_labgroupnames_tl}
 
+
+% === Fehlende Logo-Dateien ====================================================
+
+\tl_new:N \l_missing_hszg_tl
+\tl_set:Nn \l_missing_hszg_tl {Logo\ HSZG.svg\ fehlt!}
+\tl_new:N \l_missing_fei_tl
+\tl_set:Nn \l_missing_fei_tl {Logo\ f-ei.png\ fehlt!}
+
+\msg_new:nnn { HSZG-Protokoll } { missing_hszg } \l_missing_hszg_tl
+\msg_new:nnn { HSZG-Protokoll } { missing_fei } \l_missing_fei_tl
 
 \tl_new:N \l_hszg_tl
 \tl_set:Nn \l_hszg_tl {assets/images/HSZG.svg}
-\cs_new_protected:Npn \FileHszgTest
-    {
-        \bool_if:nTF
-            { \file_if_exist_p:V \l_hszg_tl }
-            { \includesvg[height=1.5cm]{\tl_use:N \l_hszg_tl} }
-            { \todo[color=red]{Logo\ \texttt{HSZG.svg}\ fehlt!}}
-    } 
+\cs_new_protected:Npn \FileHszgTest{
+    \bool_if:nTF
+        { \file_if_exist_p:V \l_hszg_tl }
+        { \includesvg[height=1.5cm]{\tl_use:N \l_hszg_tl} }
+        { 
+            \todo[color=red]{Logo\ \texttt{HSZG.svg}\ fehlt!}
+            \msg_error:nn{HSZG-Protokoll}{missing_hszg}
+        }
+} 
 
 \tl_new:N \l_fei_tl
 \tl_set:Nn \l_fei_tl {assets/images/f-ei.png}
-\cs_new_protected:Npn \FileFEITest
-    {
-        \bool_if:nTF
-            { \file_if_exist_p:V \l_fei_tl }
-            { \includegraphics[height=1.4cm]{\tl_use:N \l_fei_tl}}
-            { \todo[color=red]{Logo\ \texttt{f-ei.png}\ fehlt!}}
-    } 
+\cs_new_protected:Npn \FileFEITest{
+    \bool_if:nTF
+        { \file_if_exist_p:V \l_fei_tl }
+        { \includegraphics[height=1.4cm]{\tl_use:N \l_fei_tl}}
+        { 
+            \todo[color=red]{Logo\ \texttt{f-ei.png}\ fehlt!}
+            \msg_error:nn{HSZG-Protokoll}{missing_fei}
+        }
+} 
 
 
 \ExplSyntaxOff
