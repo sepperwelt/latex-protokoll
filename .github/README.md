@@ -101,13 +101,7 @@ Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Ve
 | `csquotes` |       |
 | `multicol` |       |
 | `setspace` |       |
-| `enumitem` | 
-```
-\setitemize{itemsep=-5pt}
-\setenumerate{itemsep=-5pt}
-\setlength{\mathindent}{10pt}
-```
-|
+| `enumitem` | <pre><code>\setitemize{itemsep=-5pt}\n \setenumerate{itemsep=-5pt}\n \setlength{\mathindent}{10pt}<\code><\pre>|
 | `pdfpages` | `final`      |
 | `graphicx` |       |
 | `hyperref` |       |
