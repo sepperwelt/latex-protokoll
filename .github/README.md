@@ -101,7 +101,7 @@ Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Ve
 | `csquotes` |       |
 | `multicol` |       |
 | `setspace` |       |
-| `enumitem` | <pre><code>\setitemize{itemsep=-5pt}\n \setenumerate{itemsep=-5pt}\n \setlength{\mathindent}{10pt}<\code><\pre>|
+| `enumitem` | `\setitemize{itemsep=-5pt}` `\setenumerate{itemsep=-5pt}`|
 | `pdfpages` | `final`      |
 | `graphicx` |       |
 | `hyperref` |       |
@@ -119,5 +119,5 @@ Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Ve
 ## Verbesserung
 Sehr gern können Verbesserungsvorschläge als Issue eingereicht werden.
 
-## License
+## Lizenz
 Das Repository ist unter der LaTeX Project Public License lizensiert.
