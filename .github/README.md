@@ -1,12 +1,12 @@
 # Vorlage für Protokolle der Fakultät EI an der Hochschule Zittau/Görlitz
-Dieses Repository beinhaltet in erster Linie eine neue Klasse `HSZG-Protokoll`, das bequem ein Titelblatt für Protokolle der Fakultät EI an der Hochschule Zittau/Görlitz erstellt. Bereitgestellt wird die Klassendefinition samt Logo-Dateien der HSZG sowie ein Beispieldokument mit nützlichen Formatierungen und Code-Beispielen.
+Dieses Repository beinhaltet in erster Linie eine neue Klasse `HSZG-Protokoll`, die bequem ein Titelblatt für Protokolle der Fakultät EI an der Hochschule Zittau/Görlitz erstellt. Bereitgestellt wird die Klassendefinition samt Logo-Dateien der HSZG sowie ein Beispieldokument mit nützlichen Formatierungen und Code-Beispielen.
 
-Die Klasse stellt ferner auch nützliche Befehle zur Verfügung, um das genaue Zeichensetzen zu beschleunigen.
+Die Klasse stellt ferner auch nützliche Befehle zur Verfügung, um das genaue Zeichensetzen für Abkürzungen sowie mathematischer Shortcuts zu beschleunigen.
 
 ## Verwendung
 1. Repository clonen
 2. Dokument mit der Klasse `HSZG-Protokoll` erstellen. Dafür kann die Datei `Protokoll.tex` genutzt werden.
-3. Externe Quellen in `./assets` ablegen.
+3. Externe Quellen (Bilder, `tikz`-Grafiken etc.) in `./assets` ablegen.
 4. Bei Bedarf den Inhalt des Dokuments aufteilen. (Im Beispieldokument in `content.tex` ausgelagert.)
 
 ## Setup des Dokuments
@@ -49,7 +49,7 @@ Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Ve
 ### Mathematische Befehle
 
 | Befehl    | Darstellung | Verwendung |
-|-----------|-------------|------------|
+|-----------|:-----------:|------------|
 | `\mv{}` | $\boldsymbol{N}$            | fette Zeichen für Matrizen, Vektoren und dgl.           |
 | `\kmv{}`    | $\underline{\boldsymbol{N}}$ | fette unterstrichene Zeichen für komplexe Größen |
 | `\trans{}` | $\boldsymbol{A}^{\mathrm{T}}$ | Transponierte einer Matrix |
@@ -58,7 +58,6 @@ Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Ve
 | `\re{}` | $\mathrm{Re}(U)$ | Realteil |
 | `\im{}` | $\mathrm{Im}(I)$ | Imaginärteil |
 | `\K{}`  | $\underline{I}$ | Komplexe Größe |
-| `\corsp`| $\stackrel{\scriptscriptstyle \bigtriangleup}{=}$ | "entspricht"-Zeichen|
 | `\ident`| $\boldsymbol{I}$ | Einheitsmatrix |
 | `\const` | $\mathrm{const.}$ | Konstante |
 | `\ii` | $j$ | Imaginäre Einheit |
