@@ -19,7 +19,7 @@ Um das Dokument einzurichten, steht der Befehl `\SetupTitlePage` zur Verfügung.
 | `namelabengineer` | Name des Laboringenieurs | `{}` |
 | `datelab`      | Datum des Versuchs          | `{}` |
 | `datereport`   | Datum des Protokolls        | `{}`, `\today` |
-| `labgroup`     | Nummer der Praktikumsgruppe[^1] | `{}` |
+| `labgroup`     | Nummer der Praktikumsgruppe [^1] | `{}` |
 | `labgroupnames`| Namen der Teilnehmenden [^2]    | `{}` |
 | `bibstyle`     | Zitationsstil [^3]          | `num`, `alph` |
 | `sffont`       | serifenlose Schriftart      | -- |
@@ -32,8 +32,95 @@ Um das Dokument einzurichten, steht der Befehl `\SetupTitlePage` zur Verfügung.
 > [!NOTE]
 > Wird ein Schlüssel nicht angegeben, wird der Text im Dokument rot dargestellt und eine Fehlermeldung ausgegeben.
 
-## Bereitgestellte Befehle
+> [!NOTE]
+> Wird die Datei `references.bib` nicht gefunden, wird `biblatex` nicht geladen und kein Literaturverzeichnis erstellt.
 
+## Bereitgestellte Befehle
+### Abtürzungen
+Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Verfügung:
+| Befehl    | Darstellung |
+|-----------|-------------|
+| `\zb` | z. B. |
+| `\ua` | u. a. |
+| `\ie` | d. h. |
+| `\og` | o. g. |
+| `\oa` | o. a. |
+
+### Mathematische Befehle
+
+| Befehl    | Darstellung | Verwendung |
+|-----------|-------------|------------|
+| `\mv{}` | $\boldsymbol{N}$            | fette Zeichen für Matrizen, Vektoren und dgl.           |
+| `\kmv{}`    | $\underline{\boldsymbol{N}}$ | fette unterstrichene Zeichen für komplexe Größen |
+| `\trans{}` | $\boldsymbol{A}^{\mathrm{T}}$ | Transponierte einer Matrix |
+| `\herm{}` | $\boldsymbol{B}^{\mathrm{H}}$ | Transponierte einer konjugiert komplexen Matrix |
+| `\rg{}` | $\mathrm{rg}\left(C\right)$ | Rang einer Matrix |
+| `\re{}` | $\mathrm{Re}\left\{U\right\}$ | Realteil |
+| `\im{}` | $\mathrm{Im}\left\{S\right\} $ | Imaginärteil |
+| `\K{}`  | $\underline{I}$ | Komplexe Größe |
+| `\corsp`| $\stackrel{\scriptscriptstyle \bigtriangleup}{=}$ | "entspricht"-Zeichen|
+| `\ident`| $\mv{I}$ | Einheitsmatrix |
+| `\const` | $\mathrm{const.}$ | Konstante |
+| `\ii` | $j$ | Imaginäre Einheit |
+| `\jw` | $j \, \omega$ | |
+
+<details>
+<summary>Liste der eingebundenen Pakete</summary>
+
+| Package | Option |
+|---------|--------|
+| `article` |       |
+| `silence` |       |
+| `keyval` |       |
+| `geometry` | `a4paper` `left=2.5cm` `right=2.5cm`      |
+| `inputenc` | `utf8`      |
+| `babel` | `ngerman`      |
+| `grffile` |       |
+| `eurosym` |       |
+| `amsmath` | `\allowdisplaybreaks`      |
+| `amsthm` |       |
+| `amssymb` |       |
+| `siunitx` | `separate-uncertainty` `\sisetup{locale = DE}`     |
+| `physics` |       |
+| `ifthen` |       |
+| `fancyhdr` | `\pagestyle{fancy}`      |
+| `subcaption` |       |
+| `caption` |  `justification=centering` `labelfont=bf`     |
+| `footmisc` | `bottom`      |
+| `todonotes` | `\presetkeys{todonotes}{inline}{}`      |
+| `tikz` | `\usetikzlibrary{calc}`      |
+| `gnuplot-lua-tikz` |       |
+| `circuitikz` |       |
+| `lastpage` |       |
+| `xspace` |       |
+| `parskip` | `skip=10pt` `plus1pt` `indent=10pt`      |
+| `makecell` |       |
+| `csvsimple` |       |
+| `svg` |       |
+| `sectsty` |       |
+| `csquotes` |       |
+| `multicol` |       |
+| `setspace` |       |
+| `enumitem` | 
+```
+\setitemize{itemsep=-5pt}
+\setenumerate{itemsep=-5pt}
+\setlength{\mathindent}{10pt}
+```
+|
+| `pdfpages` | `final`      |
+| `graphicx` |       |
+| `hyperref` |       |
+| `article` | `hidelinks`      |
+| `placeins` |       |
+| `upgreek` |       |
+| `tabularx` |       |
+| `longtable` |       |
+| `booktabs` |       |
+| `nicefrac` |       |
+| `biblatex` | `backend=biber      |
+
+</details>
 
 ## Verbesserung
 Sehr gern können Verbesserungsvorschläge als Issue eingereicht werden.

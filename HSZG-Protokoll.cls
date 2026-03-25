@@ -11,7 +11,6 @@
 \RequirePackage[ngerman]{babel}
 \RequirePackage{grffile}
 \RequirePackage{eurosym}
-\RequirePackage{graphicx} 
 \RequirePackage{amsmath, amsthm, amssymb}
 \allowdisplaybreaks
 \RequirePackage[separate-uncertainty]{siunitx}
@@ -37,7 +36,6 @@
 \RequirePackage[skip=10pt plus1pt, indent=10pt]{parskip}
 \RequirePackage{makecell}
 \RequirePackage{csvsimple}
-\RequirePackage{siunitx}
 \sisetup{locale = DE}
 
 \RequirePackage{svg}
