@@ -126,7 +126,4 @@ Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Ve
 Sehr gern können Verbesserungsvorschläge als Issue eingereicht werden.
 
 ## License
-MIT License
-
-## Contact
-Email: example@domain.com
+Das Repository ist unter der LaTeX Project Public License lizensiert.
