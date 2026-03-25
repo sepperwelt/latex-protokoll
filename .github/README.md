@@ -59,7 +59,7 @@ Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Ve
 | `\im{}` | $\mathrm{Im}\{S\} $ | Imaginärteil |
 | `\K{}`  | $\underline{I}$ | Komplexe Größe |
 | `\corsp`| $\stackrel{\scriptscriptstyle \bigtriangleup}{=}$ | "entspricht"-Zeichen|
-| `\ident`| $\mv{I}$ | Einheitsmatrix |
+| `\ident`| $\boldsymbol{I}$ | Einheitsmatrix |
 | `\const` | $\mathrm{const.}$ | Konstante |
 | `\ii` | $j$ | Imaginäre Einheit |
 | `\jw` | $j \, \omega$ | |
