@@ -333,7 +333,6 @@
 \newcommand{\re}[1]{\mathrm{Re}\left\{  #1 \right\} }           %  Realteil
 \newcommand{\im}[1]{\mathrm{Im}\left\{  #1 \right\} }           %  Imaginärteil
 \newcommand{\K}[1]{\underline{#1}}                              %  Unterstreichung ... komplex
-\newcommand{\corsp}{\ensuremath{\stackrel{\scriptscriptstyle \bigtriangleup}{=}}} %  erzeugt das "entspricht Zeichen"
 \newcommand{\ident}{\mv{I}}	                                    %  Einheitsmatrix							
 \newcommand{\const}{\mathrm{const.}}			                %  const. im Mathematikmodus							
 \newcommand{\ii}{j}		                                        %  imaginäre Einheit
