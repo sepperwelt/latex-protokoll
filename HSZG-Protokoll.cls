@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{HSZG-Protokoll}[2026/03/24 Vorlage für Protokolle an der HSZG]
+\ProvidesClass{HSZG-Protokoll}[2026/03/25 v1.0 Vorlage für Protokolle an der HSZG]
 \LoadClass[a4paper,fleqn,11pt]{article}
 
 \setlength{\headheight}{23pt}
