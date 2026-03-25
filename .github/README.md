@@ -63,6 +63,10 @@ Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Ve
 | `\ii` | $j$ | Imaginäre Einheit |
 | `\jw` | $j \, \omega$ | |
 
+### Tabellen
+Das Package stellt den Zelltyp `C` als zentrierte `X`-Zelle für Tabellen mit `tabularx` und dgl. bereit.
+
+  
 <details>
 <summary>Liste der eingebundenen Pakete</summary>
 
