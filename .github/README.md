@@ -55,8 +55,8 @@ Die folgenden Befehle stellen gängige Abkürzungen mit korrektem Abstand zur Ve
 | `\trans{}` | $\boldsymbol{A}^{\mathrm{T}}$ | Transponierte einer Matrix |
 | `\herm{}` | $\boldsymbol{B}^{\mathrm{H}}$ | Transponierte einer konjugiert komplexen Matrix |
 | `\rg{}` | $\mathrm{rg}\left(C\right)$ | Rang einer Matrix |
-| `\re{}` | $\mathrm{Re}\{U\right\}$ | Realteil |
-| `\im{}` | $\mathrm{Im}\{S\} $ | Imaginärteil |
+| `\re{}` | $\mathrm{Re}{U}$ | Realteil |
+| `\im{}` | $\mathrm{Im}{S} $ | Imaginärteil |
 | `\K{}`  | $\underline{I}$ | Komplexe Größe |
 | `\corsp`| $\stackrel{\scriptscriptstyle \bigtriangleup}{=}$ | "entspricht"-Zeichen|
 | `\ident`| $\boldsymbol{I}$ | Einheitsmatrix |
