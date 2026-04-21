@@ -21,6 +21,7 @@ Um das Dokument einzurichten, steht der Befehl `\SetupTitlePage` zur Verfügung.
 | `datereport`   | Datum des Protokolls        | `{}`, `\today` |
 | `labgroup`     | Nummer der Praktikumsgruppe [^1] | `{}` |
 | `labgroupnames`| Namen der Teilnehmenden [^2]    | `{}` |
+| `studyregister`| Matrikel                    | `{}` |
 | `bibstyle`     | Zitationsstil [^3]          | `num`, `alph` |
 | `sffont`       | serifenlose Schriftart      | -- |
 | `labfem`       | weibliche Laboringeneurin   | -- |
