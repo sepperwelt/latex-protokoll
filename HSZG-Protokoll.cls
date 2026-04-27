@@ -352,7 +352,7 @@
 \chead{} 
 \rhead{} 
 
-\lfoot{\footnotesize Gruppe \labgroup} \cfoot{} \rfoot{\footnotesize Seite \thepage\ von \pageref{LastPage}} 
+\lfoot{\footnotesize \labgroup} \cfoot{} \rfoot{\footnotesize Seite \thepage\ von \pageref{LastPage}} 
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 \addto\captionsngerman{\renewcommand{\figurename}{Abb.}}
