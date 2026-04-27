@@ -28,7 +28,7 @@
 \WarningFilter{todonotes}{}
 
 \RequirePackage{tikz}
-\RequirePackage{gnuplot-lua-tikz}
+%\RequirePackage{gnuplot-lua-tikz}
 \RequirePackage{circuitikz}
 \usetikzlibrary{calc}
 \RequirePackage{lastpage}
