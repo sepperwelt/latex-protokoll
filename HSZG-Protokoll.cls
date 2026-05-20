@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{HSZG-Protokoll}[2026/03/25 v1.0 Vorlage für Protokolle an der HSZG]
+\ProvidesClass{HSZG-Protokoll}[2026/05/20 v1.1 Vorlage für Protokolle an der HSZG]
 \LoadClass[a4paper,fleqn,11pt]{article}
 
 \setlength{\headheight}{23pt}
@@ -11,7 +11,8 @@
 \RequirePackage[ngerman]{babel}
 \RequirePackage{grffile}
 \RequirePackage{eurosym}
-\RequirePackage{amsmath, amsthm, amssymb}
+\RequirePackage[fleqn]{amsmath}
+\RequirePackage{amsthm, amssymb}
 \allowdisplaybreaks
 \RequirePackage[separate-uncertainty]{siunitx}
 \RequirePackage{physics}
@@ -28,12 +29,11 @@
 \WarningFilter{todonotes}{}
 
 \RequirePackage{tikz}
-%\RequirePackage{gnuplot-lua-tikz}
 \RequirePackage{circuitikz}
 \usetikzlibrary{calc}
 \RequirePackage{lastpage}
 \RequirePackage{xspace}	
-\RequirePackage[skip=10pt plus1pt, indent=10pt]{parskip}
+\RequirePackage[skip=10pt plus1pt, indent=0pt]{parskip}
 \RequirePackage{makecell}
 \RequirePackage{csvsimple}
 \sisetup{locale = DE}
@@ -54,6 +54,7 @@
 \RequirePackage[final]{pdfpages}							% zum einbinden von externen pdf-Seiten
 \RequirePackage{graphicx}								%  zum Einbinden von Grafiken, spziell für dvi->ps Konvertierung
 \setlength{\unitlength}{1mm}
+\RequirePackage{wrapfig}
 \RequirePackage[hidelinks]{hyperref}	
 \RequirePackage{placeins}								% FloatBarrier
 \RequirePackage{upgreek}
@@ -110,9 +111,13 @@
 \tl_new:N \l_studyregister_tl
 \tl_new:N \l_labgroup_tl
 \tl_new:N \l_labgroupnames_tl
+\tl_new:N \l_indent_tl
+\tl_new:N \l_gnuplot_tl
 
 
 \bool_new:N \l_labfem_bool
+\bool_new:N \l_indent_bool
+\bool_new:N \l_gnuplot_bool
 
 \bool_new:N \g_titlepage_titlelecture_bool
 \bool_new:N \g_titlepage_titlelab_bool
@@ -210,6 +215,12 @@
     bibstyle        .choice:,
     bibstyle / num  .code:n = \tl_set:Nn \l_bib_style_tl {ieee},
     bibstyle / alph .code:n = \tl_set:Nn \l_bib_style_tl {alphabetic},
+
+    indent          .bool_set:N = \l_indent_bool,
+    indent          .value_forbidden:n = true,
+
+    gnuplot         .bool_set:N = \l_gnuplot_bool,
+    gnuplot         .value_forbidden:n = false,
 }
 
 % === Fehlende Keys überprüfen ==========================================
@@ -269,6 +280,14 @@
 
     \bool_if:NT \l_labfem_bool {
         \RenewDocumentCommand{\labengineer}{}{Laboringenieurin}
+    }
+
+    \bool_if:NT \l_indent_bool {
+        \setlength\parindent{10pt}
+    }
+
+    \bool_if:NT \l_gnuplot_bool {
+        \RequirePackage{gnuplot-lua-tikz}
     }
 }
 
@@ -358,6 +377,15 @@
 \addto\captionsngerman{\renewcommand{\figurename}{Abb.}}
 \addto\captionsngerman{\renewcommand{\tablename}{Tab.}}
 %\captionsetup{justification = raggedright}
+
+\captionsetup{font=small}
+\counterwithin{figure}{section}
+\counterwithin{equation}{section}
+\counterwithin{table}{section}
+
+\AddToHook{cmd/printbibliography/before}{\begingroup\renewcommand\refname{}\vspace{-11mm}}
+\AddToHook{cmd/printbibliography/after}{\endgroup}
+
 
 \AddToHook{begindocument/end}{
     \begin{titlepage}

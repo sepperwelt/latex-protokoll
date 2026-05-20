@@ -25,13 +25,15 @@ Um das Dokument einzurichten, steht der Befehl `\SetupTitlePage` zur Verfügung.
 | `bibstyle`     | Zitationsstil [^3]          | `num`, `alph` |
 | `sffont`       | serifenlose Schriftart      | -- |
 | `labfem`       | weibliche Laboringeneurin   | -- |
+| `indent`       | Absätze einrücken           | -- |
+| `gnuplot`      | bindet das Paket `gnuplot-lua-tikz` ein | -- |
 
 [^1]: Für den Schlüssel `labgroup` muss nur eine Zahl angegeben werden, das Wort "Gruppe" wird automatisch davor gesetzt.
 [^2]: Der Schlüssel nimmt eine Liste von Namen, getrennt durch `\\`.
 [^3]: Der Zitationsstil `num` setzt die `biblatex`-Option `style=ieee`.
 
 > [!NOTE]
-> Wird ein Schlüssel nicht angegeben, wird der Text im Dokument rot dargestellt und eine Fehlermeldung ausgegeben.
+> Wird ein Schlüssel nicht angegeben, wird der Text im Dokument rot dargestellt und eine Warnung ausgegeben.
 
 > [!NOTE]
 > Wird die Datei `references.bib` nicht gefunden, wird `biblatex` nicht geladen und kein Literaturverzeichnis erstellt.
@@ -75,55 +77,54 @@ Das Package `todonotes` wird geladen. Sollen alle Notizen entfernt werden, kann 
 
 | Package | Option |
 |---------|--------|
-| `article` |       |
-| `silence` |       |
-| `keyval` |       |
-| `geometry` | `a4paper` `left=2.5cm` `right=2.5cm`      |
-| `inputenc` | `utf8`      |
-| `babel` | `ngerman`      |
-| `grffile` |       |
-| `eurosym` |       |
-| `amsmath` | `\allowdisplaybreaks`      |
-| `amsthm` |       |
-| `amssymb` |       |
-| `siunitx` | `separate-uncertainty` `\sisetup{locale = DE}`     |
-| `physics` |       |
-| `ifthen` |       |
-| `fancyhdr` | `\pagestyle{fancy}`      |
-| `subcaption` |       |
-| `caption` |  `justification=centering` `labelfont=bf`     |
-| `footmisc` | `bottom`      |
-| `todonotes` | `\presetkeys{todonotes}{inline}{}`      |
-| `tikz` | `\usetikzlibrary{calc}`      |
-| `gnuplot-lua-tikz` |       |
-| `circuitikz` |       |
-| `lastpage` |       |
-| `xspace` |       |
-| `parskip` | `skip=10pt` `plus1pt` `indent=10pt`      |
-| `makecell` |       |
-| `csvsimple` |       |
-| `svg` |       |
-| `sectsty` |       |
-| `csquotes` |       |
-| `multicol` |       |
-| `setspace` |       |
-| `enumitem` | `\setitemize{itemsep=-5pt}` `\setenumerate{itemsep=-5pt}`|
-| `pdfpages` | `final`      |
-| `graphicx` |       |
-| `hyperref` |       |
-| `article` | `hidelinks`      |
-| `placeins` |       |
-| `upgreek` |       |
-| `tabularx` |       |
-| `longtable` |       |
-| `booktabs` |       |
-| `nicefrac` |       |
-| `biblatex` | `backend=biber      |
-
+| `article` | `a4paper,fleqn,11pt`|
+| `amsmath` | `fleqn`|
+| `amsthm, amssymb` | |	
+| `array` |	|
+| `babel` |	`ngerman`|
+| `booktabs` |	|
+| `caption` | `justification=centering,labelfont=bf`
+| `circuitikz` | `calc`|
+| `csquotes` |	|
+| `csvsimple` |	|
+| `enumitem	` ||
+| `eurosym` |	|
+| `expl3` |	|
+| `fancyhdr` ||	
+| `footmisc` | `bottom`|
+| `geometry` | `a4paper, left=2.5cm, right=2.5cm`|
+| `gnuplot-lua-tikz	` ||
+| `graphicx	` ||
+| `grffile	` ||
+| `hyperref	` | `hidelinks`|
+| `ifthen` |	|
+| `inputenc` | `utf8`|
+| `keyval` |	|
+| `lastpage	` ||
+| `longtable  ` ||	
+| `makecell	` ||
+| `multicol	` ||
+| `nicefrac	` ||
+| `parskip	` | `skip=10pt plus1pt, indent=0pt`|
+| `pdfpages	` | `final`|
+| `physics` |	|
+| `placeins	` ||
+| `sectsty	` ||
+| `setspace	` ||
+| `silence` |	|
+| `siunitx	` | `separate-uncertainty`|
+| `subcaption` |	|
+| `svg` |	|
+| `tabularx` ||	
+| `tikz` |	|
+| `todonotes` |	`inline`|
+| `upgreek` |	|
+| `wrapfig` |	|
+| `xspace` |	|
 </details>
 
 ## Verbesserung
 Sehr gern können Verbesserungsvorschläge als Issue eingereicht werden.
 
 ## Lizenz
-Das Repository ist unter der LaTeX Project Public License lizensiert.
+Das Repository ist unter der LaTeX Project Public License lizensiert. Logo-Dateien der HSZG sind davon ausgenommen.
